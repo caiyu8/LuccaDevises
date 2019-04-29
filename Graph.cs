@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LuccaDevises
 {
@@ -14,9 +15,8 @@ namespace LuccaDevises
             InitGraph(edges);
         }
 
-
         /// <summary>
-        /// Initialize adjacency matrix
+        /// Initialize the adjacency matrix
         /// </summary>
         /// <param name="edges">Direct links between two vertex</param>
         private void InitGraph(IEnumerable<Edge> edges)
@@ -49,6 +49,18 @@ namespace LuccaDevises
         /// <returns>Shortest path containing each vertex</returns>
         public List<string> BreadthFirstSearch(string sourceVertex, string endVertex)
         {
+            if(IsGraphEmpty())
+            {
+                throw new Exception($"The graph is empty");
+            }
+            else if (!HasVertex(sourceVertex))
+            {
+                throw new Exception($"The start vertex {sourceVertex} is not in the graph");
+            }else if(!HasVertex(endVertex))
+            {
+                throw new Exception($"The end vertex {endVertex} is not in the graph");
+            }
+
             //Initialization
             var Parents = new Dictionary<string, string>();//Track vertex parents
             var Levels = new Dictionary<string, int>(); //track visited vertex
@@ -82,6 +94,12 @@ namespace LuccaDevises
                 level += 1;
             }
 
+            if(!Parents.ContainsKey(endVertex))
+            {
+                return new List<string>();
+                //throw new Exception("Path not found");
+            }
+            
             var parent = Parents[endVertex]; //end point's parent
             var path = new List<string> { endVertex };
 
@@ -96,6 +114,16 @@ namespace LuccaDevises
             path.Reverse();
 
             return path;
+        }
+
+        public bool HasVertex(string vertex)
+        {
+            return Neighbours.ContainsKey(vertex);
+        }
+
+        public bool IsGraphEmpty()
+        {
+            return Neighbours == null || Neighbours.Count == 0;
         }
     }
 }

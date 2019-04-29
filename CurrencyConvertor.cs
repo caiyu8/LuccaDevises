@@ -15,7 +15,6 @@ namespace LuccaDevises
 
         public CurrencyConvertor(string path)
         {
-
             InitCurrencyData(path);
         }
 
@@ -23,11 +22,15 @@ namespace LuccaDevises
         {
             var CurrencyGraph = new Graph(Edges);
 
-
             var path = CurrencyGraph.BreadthFirstSearch(SourceCurrency, TargetCurrency);
+
+            if (path == null || path.Count == 0)
+            {
+                throw new Exception($"Cann't convert {SourceCurrency} to {TargetCurrency}, no possible path found");
+            }
+
             Console.WriteLine("\nShortest conversion steps:");
             Console.WriteLine($"{string.Join("=>", path)}");
-
 
             decimal result = Amount;
 
@@ -67,6 +70,13 @@ namespace LuccaDevises
         }
 
 
+        /// <summary>
+        /// Return exchange rate between two direct linked currencies.
+        /// Divided by 1 if in reverse order.
+        /// </summary>
+        /// <param name="start">source currency</param>
+        /// <param name="end">Destination currency</param>
+        /// <returns>Exchange rate between direct linked currencies</returns>
         decimal GetExchangeRate(string start, string end)
         {
             var edge = Edges.SingleOrDefault(e => e.Start == start && e.End == end);

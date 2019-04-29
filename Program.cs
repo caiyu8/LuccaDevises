@@ -26,7 +26,7 @@ namespace LuccaDevises
             }
             catch(Exception ex) //TODO: exception handling
             {
-                Console.WriteLine("An error occurred while reading file...");
+                Console.WriteLine("\nAn error occurred while reading file...");
             }
 
             Console.WriteLine("\nPress any key to exit...");
