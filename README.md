@@ -9,5 +9,6 @@ Please follow the following steps to test this application:
 3. Type "LuccaDevises path__to_file" on the command line. For example "LuccaDevises C:\SampleData\input.txt".
 4. An example file can be found here: https://github.com/yucai1/LuccaDevises/tree/master/SampleData
 
-Reference:
+Reference: 
+<br /> 
 Bread first search(BFS) algorithm: https://www.youtube.com/watch?v=s-CYnVz-uh4
